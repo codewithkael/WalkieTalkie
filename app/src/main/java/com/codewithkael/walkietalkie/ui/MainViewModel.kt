@@ -50,7 +50,9 @@ class MainViewModel @Inject constructor(
     }
 
     fun startSocketClient(serverAddress: String) {
-        socketClient.init(URI.create("ws://$serverAddress"))
+        runCatching {
+            socketClient.init(URI.create("ws://$serverAddress"))
+        }
     }
 
     override fun onCleared() {

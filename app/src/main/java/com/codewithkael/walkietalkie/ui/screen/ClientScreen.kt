@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -56,7 +57,7 @@ fun ClientScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.padding(5.dp))
 
         Button(onClick = {
-            viewModel.startSocketClient("ws://${targetIp.value}:$SERVER_PORT")
+            viewModel.startSocketClient("${targetIp.value}:$SERVER_PORT")
         }) {
             Text(text = "Connect")
         }
@@ -71,7 +72,7 @@ fun ClientScreen(navController: NavHostController) {
             tint = Color.White,
             modifier = Modifier
                 .height(60.dp)
-                .weight(1.5f)
+                .fillMaxWidth()
                 .padding(4.dp)
                 .background(
                     MaterialTheme.colorScheme.primary,
@@ -87,8 +88,6 @@ fun ClientScreen(navController: NavHostController) {
                         viewModel.stopStreaming()
                     }
                 }
-
         )
-
     }
 }
