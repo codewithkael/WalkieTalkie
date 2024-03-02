@@ -1,6 +1,6 @@
 # Walkie Talkie: Implementing WebSocket Communication in Android
 
-Welcome to the GitHub repository for our comprehensive tutorial on **implementing WebSocket communication in Android applications using Kotlin**. In this tutorial, we will guide you through the process of establishing a WebSocket server and client connection between two Android devices, allowing them to exchange data in real-time.
+Welcome to the GitHub repository for our comprehensive tutorial on **implementing WebSocket communication in Android applications using Kotlin And Jetpack Compose**. In this tutorial, we will guide you through the process of establishing a WebSocket server and client connection between two Android devices, allowing them to exchange data in real-time. also Jetpack Compose for UI design.
 
 ## **Watch the Tutorial here**: [www.youtube.com/@codewithkael](https://www.youtube.com/@codewithkael)
 
