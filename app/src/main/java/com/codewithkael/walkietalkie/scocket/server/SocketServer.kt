@@ -1,6 +1,5 @@
 package com.codewithkael.walkietalkie.scocket.server
 
-import android.util.Log
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
@@ -11,13 +10,11 @@ class SocketServer {
     private var socketserver: WebSocketServer? = null
     private val socketClients: MutableList<WebSocket> = mutableListOf()
 
-    private val TAG = "SocketServer"
     fun init(port: Int) {
         if (socketserver == null) {
             socketserver = object : WebSocketServer(InetSocketAddress(port)) {
                 override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
                     conn?.let { socketClients.add(it) }
-                    Log.d(TAG, "onOpen: new client opened ")
                 }
 
                 override fun onClose(
@@ -30,7 +27,6 @@ class SocketServer {
                 }
 
                 override fun onMessage(conn: WebSocket?, message: String?) {
-                    Log.d(TAG, "onMessage: Server Message $message")
                     broadcastMessage(conn, message)
                 }
 
@@ -41,7 +37,6 @@ class SocketServer {
                 }
 
                 override fun onStart() {
-                    Log.d(TAG, "onStart: ")
                 }
 
 

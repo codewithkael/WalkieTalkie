@@ -1,7 +1,6 @@
 package com.codewithkael.walkietalkie.ui
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.codewithkael.walkietalkie.audio.MP3AudioStreamer
 import com.codewithkael.walkietalkie.scocket.server.SocketClient
@@ -33,8 +32,6 @@ class MainViewModel @Inject constructor(
     //states
     val socketState = MutableStateFlow(false)
 
-
-    private val TAG = "MainViewModel"
     fun startServer(port: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             socketServer.init(port)
@@ -57,7 +54,6 @@ class MainViewModel @Inject constructor(
 
     override fun onIncomingMessage(message: String) {
         mP3AudioStreamer.sendPacketToQue(gson.fromJson(message, ByteArray::class.java))
-        Log.d(TAG, "onIncomingMessage: $message")
     }
 
     override fun onClientSocketOpen() {
@@ -73,7 +69,6 @@ class MainViewModel @Inject constructor(
         streamingJob = CoroutineScope(Dispatchers.IO).launch {
             mP3AudioStreamer.startStreaming {
                 socketClient.sendPacketsToSocket(gson.toJson(it))
-                Log.d(TAG, "init: ${it.toList()}")
             }
         }
     }
