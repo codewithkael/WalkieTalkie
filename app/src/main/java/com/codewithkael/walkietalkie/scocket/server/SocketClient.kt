@@ -5,14 +5,14 @@ import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 
-class SocketClient (private val eventListener:ClientEvents)  {
+class SocketClient(private val eventListener: ClientEvents) {
 
-    private var socketClient:WebSocketClient?=null
+    private var socketClient: WebSocketClient? = null
     private val TAG = "SocketClient"
-    
+
     fun init(serverUri: URI) {
         Log.d(TAG, "init: $serverUri")
-        socketClient = object :WebSocketClient(serverUri){
+        socketClient = object : WebSocketClient(serverUri) {
             override fun onOpen(handshakedata: ServerHandshake?) {
                 eventListener.onClientSocketOpen()
                 Log.d(TAG, "onOpen: ")
@@ -35,14 +35,21 @@ class SocketClient (private val eventListener:ClientEvents)  {
         socketClient?.connect()
     }
 
-    fun sendPacketsToSocket(data:String){
+    fun sendPacketsToSocket(data: String) {
         runCatching {
             socketClient?.send(data)
         }
     }
 
-    interface ClientEvents{
-        fun onIncomingMessage(message:String)
+    fun onDestroy() {
+        runCatching {
+            socketClient?.close()
+            socketClient = null
+        }
+    }
+
+    interface ClientEvents {
+        fun onIncomingMessage(message: String)
         fun onClientSocketOpen()
         fun onClientSocketClosed()
     }

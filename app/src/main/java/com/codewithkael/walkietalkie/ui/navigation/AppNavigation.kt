@@ -1,11 +1,11 @@
 package com.codewithkael.walkietalkie.ui.navigation
 
+import HomeScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.codewithkael.walkietalkie.ui.screen.ClientScreen
-import com.codewithkael.walkietalkie.ui.screen.HomeScreen
 import com.codewithkael.walkietalkie.ui.screen.ServerScreen
 import com.codewithkael.walkietalkie.utils.Constants.CLIENT_SCREEN
 import com.codewithkael.walkietalkie.utils.Constants.MAIN_SCREEN
@@ -21,25 +21,11 @@ fun AppNavigation() {
             )
         }
         composable(SERVER_SCREEN) {
-            ServerScreen(
-                navController = navController
-            )
+            ServerScreen()
         }
 
         composable(CLIENT_SCREEN) {
-            ClientScreen(
-                navController = navController
-            )
+            ClientScreen()
         }
-
-//        composable("ConferenceScreen/{roomName}",
-//            arguments = listOf(navArgument("roomName") { type = NavType.StringType })
-//        ) {
-//            ConferenceScreen(
-//                roomId = it.arguments?.getString("roomName"),
-//                navController = navController,
-//                mainViewModel = mainViewModel
-//            )
-//        }
     }
 }

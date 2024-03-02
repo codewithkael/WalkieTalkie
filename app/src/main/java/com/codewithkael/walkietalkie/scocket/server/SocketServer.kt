@@ -50,10 +50,6 @@ class SocketServer {
     }
 
 
-    fun getSocketAddress(): InetSocketAddress? {
-        return socketserver?.address
-    }
-
     private fun broadcastMessage(sender: WebSocket?, message: String?) {
         message?.let { msg ->
             socketClients.forEach { client ->
@@ -64,5 +60,8 @@ class SocketServer {
         }
     }
 
-    fun onDestroy() = runCatching { socketserver?.stop() }
+    fun onDestroy() = runCatching {
+        socketserver?.stop()
+        socketserver = null
+    }
 }

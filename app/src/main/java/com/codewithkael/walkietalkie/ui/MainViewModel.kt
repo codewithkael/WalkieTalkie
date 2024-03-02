@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import com.codewithkael.walkietalkie.audio.MP3AudioStreamer
 import com.codewithkael.walkietalkie.scocket.server.SocketClient
 import com.codewithkael.walkietalkie.scocket.server.SocketServer
-import com.codewithkael.walkietalkie.utils.Constants.SERVER_PORT
 import com.codewithkael.walkietalkie.utils.getWifiIPAddress
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,17 +35,12 @@ class MainViewModel @Inject constructor(
 
 
     private val TAG = "MainViewModel"
-    fun init(isServerMode: Boolean) {
-        if (isServerMode) {
-            CoroutineScope(Dispatchers.IO).launch {
-                socketServer.init(SERVER_PORT)
-                delay(1000)
-                startSocketClient("${getWifiIPAddress(context)}:$SERVER_PORT")
-            }
+    fun startServer(port: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            socketServer.init(port)
+            delay(1000)
+            startSocketClient("${getWifiIPAddress(context)}:$port")
         }
-        //        else {
-
-//        }
     }
 
     fun startSocketClient(serverAddress: String) {
@@ -57,6 +51,7 @@ class MainViewModel @Inject constructor(
 
     override fun onCleared() {
         socketServer.onDestroy()
+        socketClient.onDestroy()
         super.onCleared()
     }
 
@@ -88,5 +83,15 @@ class MainViewModel @Inject constructor(
         runCatching {
             mP3AudioStreamer.stopStreaming()
         }
+    }
+
+    fun stopSocketClient() {
+        stopStreaming()
+        socketClient.onDestroy()
+    }
+
+    fun stopServer() {
+        socketServer.onDestroy()
+        stopStreaming()
     }
 }
